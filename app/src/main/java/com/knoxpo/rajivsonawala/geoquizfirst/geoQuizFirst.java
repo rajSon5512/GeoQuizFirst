@@ -13,6 +13,7 @@ public class geoQuizFirst extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private Button mPreviousButton;
     private TextView mQuestionTextView;
     private Question[] mQuestionsBank=new Question[]{new Question(R.string.question_australia,true),new Question(R.string.question_ocean,true),
             new Question(R.string.question_mideast,false),new Question(R.string.question_africa,false),new Question(R.string.question_americas,true)
@@ -32,6 +33,8 @@ public class geoQuizFirst extends AppCompatActivity {
         int question=mQuestionsBank[mCurrentIndex].getTextReadId();
 
         mQuestionTextView.setText(question);
+
+        mPreviousButton=(Button)findViewById(R.id.previousButton);
 
 
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +63,22 @@ public class geoQuizFirst extends AppCompatActivity {
                 updateQuestion();
 
 
+            }
+        });
+
+
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mCurrentIndex==0)
+                {
+                    Toast.makeText(geoQuizFirst.this, "This is First Question.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mCurrentIndex=(mCurrentIndex-1);
+                updateQuestion();
             }
         });
 

@@ -41,17 +41,37 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/nextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/next_button"
                 android:drawableRight="@drawable/arrow_right"
+                android:drawablePadding="12dp"
+
                 />
+
+            <Button
+                android:id="@+id/previousButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/previous_button"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/arrow_left"
+                />
+
+
+           </LinearLayout>
+
+
 
         </LinearLayout>
 
-
-
-
 </android.support.constraint.ConstraintLayout>
+

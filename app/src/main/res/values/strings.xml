@@ -11,5 +11,6 @@
     <string name="correct_toast">Corrent!</string>
     <string name="incorrect_toast">Incorrect!</string>
     <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
     <string name="noQuestion">All Question Are Over!</string>
 </resources>
