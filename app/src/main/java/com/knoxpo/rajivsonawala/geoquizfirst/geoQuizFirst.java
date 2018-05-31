@@ -1,10 +1,12 @@
 package com.knoxpo.rajivsonawala.geoquizfirst;
 
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,8 +14,8 @@ public class geoQuizFirst extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
-    private Button mPreviousButton;
+    private ImageButton mNextButton;
+    private ImageButton mPreviousButton;
     private TextView mQuestionTextView;
     private Question[] mQuestionsBank=new Question[]{new Question(R.string.question_australia,true),new Question(R.string.question_ocean,true),
             new Question(R.string.question_mideast,false),new Question(R.string.question_africa,false),new Question(R.string.question_americas,true)
@@ -28,14 +30,14 @@ public class geoQuizFirst extends AppCompatActivity {
 
         mTrueButton=(Button)findViewById(R.id.tButton);
         mFalseButton=(Button)findViewById(R.id.fButton);
-        mNextButton=(Button)findViewById(R.id.nextButton);
+        mNextButton=(ImageButton)findViewById(R.id.nextButton);
+
         mQuestionTextView=(TextView)findViewById(R.id.question_text_view);
         int question=mQuestionsBank[mCurrentIndex].getTextReadId();
 
         mQuestionTextView.setText(question);
 
-        mPreviousButton=(Button)findViewById(R.id.previousButton);
-
+        mPreviousButton=(ImageButton)findViewById(R.id.previousButton);
 
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,18 +68,16 @@ public class geoQuizFirst extends AppCompatActivity {
             }
         });
 
-
         mPreviousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(mCurrentIndex==0)
                 {
-                    Toast.makeText(geoQuizFirst.this, "This is First Question.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(geoQuizFirst.this,"This is First Question.",Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                mCurrentIndex=(mCurrentIndex-1);
+                mCurrentIndex=mCurrentIndex-1;
                 updateQuestion();
             }
         });
