@@ -55,16 +55,10 @@ public class geoQuizFirst extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(mCurrentIndex==mQuestionsBank.length-1)
-                {
-                    Toast.makeText(geoQuizFirst.this,R.string.noQuestion,Toast.LENGTH_SHORT).show();
-                    mCurrentIndex=(-1);
 
-                }
-                else
-                {
-                    updateQuestion();
-                }
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                updateQuestion();
+
 
             }
         });
@@ -75,7 +69,7 @@ public class geoQuizFirst extends AppCompatActivity {
 
     public void updateQuestion(){
 
-        mCurrentIndex=mCurrentIndex+1;
+
         int tempQuestion=mQuestionsBank[mCurrentIndex].getTextReadId();
         mQuestionTextView.setText(tempQuestion);
 
