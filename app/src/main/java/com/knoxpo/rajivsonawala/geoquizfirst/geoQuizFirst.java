@@ -196,7 +196,8 @@ public class geoQuizFirst extends AppCompatActivity {
     public void result()
     {
 
-        Toast.makeText(geoQuizFirst.this,"Correct:"+(mCorrent*100)/6+"%"+"Incorrect:"+(mIncorrent*100)/6+"%",Toast.LENGTH_LONG).show();
+        String st=new String();
+        Toast.makeText(geoQuizFirst.this,"Correct:"+st.valueOf((mCorrent*100)/6)+"%"+"Incorrect:"+st.valueOf((mIncorrent*100)/6)+"%",Toast.LENGTH_LONG).show();
         mCorrent=0;
         mIncorrent=0;
     }
