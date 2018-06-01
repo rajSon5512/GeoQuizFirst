@@ -3,6 +3,7 @@ package com.knoxpo.rajivsonawala.geoquizfirst;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -22,15 +23,27 @@ public class geoQuizFirst extends AppCompatActivity {
             ,new Question(R.string.question_asia,false)};
 
     private int mCurrentIndex=0;
+    private final static String mIndex="Index";
+
+    private final static String TAG="GeoQuiz";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geo_quiz_first);
 
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(mIndex, 0);
+        }
+
+        Log.d(TAG,"your oncreate Method Is Called.");
         mTrueButton=(Button)findViewById(R.id.tButton);
         mFalseButton=(Button)findViewById(R.id.fButton);
         mNextButton=(ImageButton)findViewById(R.id.nextButton);
+
+
+
 
         mQuestionTextView=(TextView)findViewById(R.id.question_text_view);
         int question=mQuestionsBank[mCurrentIndex].getTextReadId();
@@ -86,6 +99,45 @@ public class geoQuizFirst extends AppCompatActivity {
     }
 
 
+    public void onStart()
+    {
+        super.onStart();
+        Log.d(TAG,"Your onstart method Called");
+    }
+
+    public void onResume()
+    {
+        super.onResume();
+        Log.d(TAG,"Your onResume method was Called.");
+    }
+
+    public void onPause()
+    {
+        super.onPause();
+        Log.d(TAG,"Your onPause Method Was called.");
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Log.d(TAG,"Your onStop method called");
+
+    }
+
+    public void onDestroy(){
+
+        super.onDestroy();
+        Log.d(TAG,"Your onDestroy method called.");
+    }
+
+    public void onRestart(){
+
+        super.onRestart();
+        Log.d(TAG,"Your application Restart called.");
+    }
+
+
+
     public void updateQuestion(){
 
 
@@ -113,4 +165,16 @@ public class geoQuizFirst extends AppCompatActivity {
         Toast.makeText(geoQuizFirst.this,myAns,Toast.LENGTH_SHORT).show();
     }
 
+    public void onSaveInstanceState(Bundle savedInstanceState){
+
+
+        super.onSaveInstanceState(savedInstanceState);
+        Log.d(TAG,"Your onSaveInstanceState method.");
+        Log.i(mIndex,"onStateInstatanceState");
+        savedInstanceState.putInt(mIndex,mCurrentIndex);
+
+    }
+
+
 }
+
