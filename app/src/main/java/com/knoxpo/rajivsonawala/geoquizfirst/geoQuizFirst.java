@@ -22,8 +22,11 @@ public class geoQuizFirst extends AppCompatActivity {
             new Question(R.string.question_mideast,false),new Question(R.string.question_africa,false),new Question(R.string.question_americas,true)
             ,new Question(R.string.question_asia,false)};
 
+    private int mCorrent=0;
+    private int mIncorrent=0;
     private int mCurrentIndex=0;
     private final static String mIndex="Index";
+    private static int mTempIndex=0;
 
     private final static String TAG="GeoQuiz";
 
@@ -53,10 +56,13 @@ public class geoQuizFirst extends AppCompatActivity {
         mPreviousButton=(ImageButton)findViewById(R.id.previousButton);
 
         mTrueButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
+
                     checkAnswer(true);
+
             }
         });
 
@@ -64,8 +70,11 @@ public class geoQuizFirst extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                mTrueButton.setEnabled(true);
+                mTrueButton.setEnabled(true);
+                checkAnswer(false);
 
-                    checkAnswer(false);
+
             }
         });
 
@@ -76,6 +85,7 @@ public class geoQuizFirst extends AppCompatActivity {
 
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
                 updateQuestion();
+                disableButton(true);
 
 
             }
@@ -92,6 +102,7 @@ public class geoQuizFirst extends AppCompatActivity {
                 }
                 mCurrentIndex=mCurrentIndex-1;
                 updateQuestion();
+                disableButton(true);
             }
         });
 
@@ -150,20 +161,37 @@ public class geoQuizFirst extends AppCompatActivity {
     {
         boolean tempAns=mQuestionsBank[mCurrentIndex].isAnswereTrue();
 
+
         int myAns=0;
 
         if(answer==tempAns)
         {
             myAns=R.string.correct_toast;
+            disableButton(false);
+
 
         }
         else{
 
             myAns=R.string.incorrect_toast;
+            disableButton(false);
+
         }
 
+
         Toast.makeText(geoQuizFirst.this,myAns,Toast.LENGTH_SHORT).show();
+
+
     }
+
+
+    public void disableButton(boolean ansButton){
+
+        mTrueButton.setEnabled(ansButton);
+        mFalseButton.setEnabled(ansButton);
+
+    }
+
 
     public void onSaveInstanceState(Bundle savedInstanceState){
 
@@ -174,6 +202,8 @@ public class geoQuizFirst extends AppCompatActivity {
         savedInstanceState.putInt(mIndex,mCurrentIndex);
 
     }
+
+
 
 
 }
