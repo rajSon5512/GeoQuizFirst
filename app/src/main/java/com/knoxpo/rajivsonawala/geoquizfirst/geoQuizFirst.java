@@ -168,6 +168,7 @@ public class geoQuizFirst extends AppCompatActivity {
         {
             myAns=R.string.correct_toast;
             disableButton(false);
+            mCorrent=mCorrent+1;
 
 
         }
@@ -175,14 +176,31 @@ public class geoQuizFirst extends AppCompatActivity {
 
             myAns=R.string.incorrect_toast;
             disableButton(false);
+            mIncorrent=mIncorrent+1;
 
         }
 
 
         Toast.makeText(geoQuizFirst.this,myAns,Toast.LENGTH_SHORT).show();
 
+        if(mCurrentIndex==5)
+          {
+              result();
+
+         }
+
 
     }
+
+
+    public void result()
+    {
+
+        Toast.makeText(geoQuizFirst.this,"Correct:"+mCorrent+"Incorrect:"+mIncorrent,Toast.LENGTH_LONG).show();
+        mCorrent=0;
+        mIncorrent=0;
+    }
+
 
 
     public void disableButton(boolean ansButton){
