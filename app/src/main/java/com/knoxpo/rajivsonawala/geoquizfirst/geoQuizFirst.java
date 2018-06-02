@@ -1,10 +1,8 @@
 package com.knoxpo.rajivsonawala.geoquizfirst;
 
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -100,9 +98,15 @@ public class geoQuizFirst extends AppCompatActivity {
                     Toast.makeText(geoQuizFirst.this,"This is First Question.",Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if(mCurrentIndex!=0)
+                {
+                    disableButton(false);
+                }
+
                 mCurrentIndex=mCurrentIndex-1;
                 updateQuestion();
-                disableButton(true);
+
             }
         });
 
@@ -197,7 +201,8 @@ public class geoQuizFirst extends AppCompatActivity {
     {
 
         String st=new String();
-        Toast.makeText(geoQuizFirst.this,"Correct:"+st.valueOf((mCorrent*100)/6)+"%"+"Incorrect:"+st.valueOf((mIncorrent*100)/6)+"%",Toast.LENGTH_LONG).show();
+        int precentage=(mCorrent*100)/mQuestionsBank.length;
+        Toast.makeText(geoQuizFirst.this,"Correct:"+st.valueOf(precentage)+"%"+"Incorrect:"+st.valueOf(100-precentage)+"%",Toast.LENGTH_LONG).show();
         mCorrent=0;
         mIncorrent=0;
     }
@@ -223,6 +228,7 @@ public class geoQuizFirst extends AppCompatActivity {
     }
 
 
+    
 
 
 }

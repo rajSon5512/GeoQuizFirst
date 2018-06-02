@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:padding="22dp"
                 android:src="@drawable/arrow_right"
-                />
+                android:contentDescription="TODO" />
 
             <ImageButton
                 android:id="@+id/previousButton"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:padding="22dp"
                 android:src="@drawable/arrow_left"
-                />
+                android:contentDescription="TODO" />
 
 
            </LinearLayout>
