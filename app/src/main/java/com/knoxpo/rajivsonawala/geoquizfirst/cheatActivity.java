@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ public class cheatActivity extends AppCompatActivity {
     private TextView mtextAnswer;
     private Button mShowAnswerButton;
     private boolean mvalueIsTrue;
+    private final static String TAG="Your Item";
+    private final static String mValue="value";
     private static final String Extra_code_Answer_Shown="com.knoxpo.rajivsonawala.geoQuizfirst.answer_shown";
 
     @Override
@@ -26,24 +29,41 @@ public class cheatActivity extends AppCompatActivity {
         mShowAnswerButton=(Button)findViewById(R.id.show_answer_button);
         mtextAnswer=(TextView)findViewById(R.id.answer_text_view);
 
-        mvalueIsTrue= getIntent().getBooleanExtra(Extra_Answer_Is_True,false);
+        if(savedInstanceState!=null)
+        {
+            mvalueIsTrue=savedInstanceState.getBoolean(mValue,false);
+            showResult(mvalueIsTrue
+            );
+        }
+        else {
+
+            mvalueIsTrue = getIntent().getBooleanExtra(Extra_Answer_Is_True, false);
+        }
+
 
         mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(mvalueIsTrue) {
-                    mtextAnswer.setText(R.string.true_button);
-                }
-                else
-                {
-                    mtextAnswer.setText(R.string.false_button);
+               showResult(mvalueIsTrue);
 
-                }
-                setAnswerShownResult(true);
             }
         });
 
+        }
+
+
+
+        public void showResult(boolean value)
+        {
+            if(value)
+            {
+                mtextAnswer.setText(R.string.true_button);
+            }
+            else{
+                mtextAnswer.setText(R.string.false_button);
+            }
+            setAnswerShownResult(true);
 
         }
 
@@ -66,8 +86,24 @@ public class cheatActivity extends AppCompatActivity {
          }
 
 
-         
+    public void onSaveInstanceState(Bundle savedInstanceState){
 
+
+
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(mValue,"Your Value");
+        savedInstanceState.putBoolean(mValue,mvalueIsTrue);
+
+    }
+
+
+
+    public void onStop()
+    {
+        super.onStop();
+        Log.d(TAG,"Your onStop method called");
+
+    }
 
 
 
