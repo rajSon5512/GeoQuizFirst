@@ -1,5 +1,7 @@
 package com.knoxpo.rajivsonawala.geoquizfirst;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +13,16 @@ import android.widget.Toast;
 
 public class geoQuizFirst extends AppCompatActivity {
 
+    private Button mCheatButton;
     private Button mTrueButton;
     private Button mFalseButton;
     private ImageButton mNextButton;
     private ImageButton mPreviousButton;
+    private int REQUEST_CODE_FOR_CHEAT;
     private TextView mQuestionTextView;
+    private boolean mIsCheatAnswer;
+    private String messageResId;
+
     private Question[] mQuestionsBank=new Question[]{new Question(R.string.question_australia,true),new Question(R.string.question_ocean,true),
             new Question(R.string.question_mideast,false),new Question(R.string.question_africa,false),new Question(R.string.question_americas,true)
             ,new Question(R.string.question_asia,false)};
@@ -42,6 +49,7 @@ public class geoQuizFirst extends AppCompatActivity {
         mTrueButton=(Button)findViewById(R.id.tButton);
         mFalseButton=(Button)findViewById(R.id.fButton);
         mNextButton=(ImageButton)findViewById(R.id.nextButton);
+        mCheatButton=(Button)findViewById(R.id.cheat_button);
 
 
 
@@ -82,6 +90,7 @@ public class geoQuizFirst extends AppCompatActivity {
 
 
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionsBank.length;
+                mIsCheatAnswer=false;
                 updateQuestion();
                 disableButton(true);
 
@@ -110,9 +119,39 @@ public class geoQuizFirst extends AppCompatActivity {
             }
         });
 
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Start Activity
+               // Intent intent=new Intent(geoQuizFirst.this,cheatActivity.class);
+                boolean answerIsTrue = mQuestionsBank[mCurrentIndex].isAnswereTrue();
+                Intent intent = cheatActivity.newIntent(geoQuizFirst.this, answerIsTrue);
+               // startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE_FOR_CHEAT);
+
+            }
+        });
+
 
     }
 
+
+    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+
+            if(resultCode!= Activity.RESULT_OK)
+            {
+                return;
+            }
+
+            if(requestCode==REQUEST_CODE_FOR_CHEAT)
+            {
+                if(data==null){
+                    return;
+                }
+                mIsCheatAnswer=cheatActivity.wasAnswerShown(data);
+            }
+
+    }
 
     public void onStart()
     {
@@ -168,44 +207,43 @@ public class geoQuizFirst extends AppCompatActivity {
 
         int myAns=0;
 
-        if(answer==tempAns)
-        {
-            myAns=R.string.correct_toast;
-            disableButton(false);
-            mCorrent=mCorrent+1;
 
+        if(mIsCheatAnswer){
+            String toastString = getString(R.string.judgment_Toast);
+           Toast.makeText(geoQuizFirst.this,toastString,Toast.LENGTH_SHORT).show();
+        }
+        else {
+
+            if (answer == tempAns) {
+                myAns = R.string.correct_toast;
+                disableButton(false);
+                mCorrent = mCorrent + 1;
+            } else {
+
+                myAns = R.string.incorrect_toast;
+                disableButton(false);
+                mIncorrent = mIncorrent + 1;
+
+            }
+
+
+
+            Toast.makeText(geoQuizFirst.this, myAns, Toast.LENGTH_SHORT).show();
+
+            if (mCurrentIndex == 5) {
+                String st = new String();
+                int precentage = (mCorrent * 100) / mQuestionsBank.length;
+                Toast.makeText(geoQuizFirst.this, "Correct:" + st.valueOf(precentage) + "%" + "Incorrect:" + st.valueOf(100 - precentage) + "%", Toast.LENGTH_LONG).show();
+                mCorrent = 0;
+                mIncorrent = 0;
+
+            }
 
         }
-        else{
-
-            myAns=R.string.incorrect_toast;
-            disableButton(false);
-            mIncorrent=mIncorrent+1;
-
-        }
-
-
-        Toast.makeText(geoQuizFirst.this,myAns,Toast.LENGTH_SHORT).show();
-
-        if(mCurrentIndex==5)
-          {
-              result();
-
-         }
-
 
     }
 
 
-    public void result()
-    {
-
-        String st=new String();
-        int precentage=(mCorrent*100)/mQuestionsBank.length;
-        Toast.makeText(geoQuizFirst.this,"Correct:"+st.valueOf(precentage)+"%"+"Incorrect:"+st.valueOf(100-precentage)+"%",Toast.LENGTH_LONG).show();
-        mCorrent=0;
-        mIncorrent=0;
-    }
 
 
 
@@ -226,6 +264,7 @@ public class geoQuizFirst extends AppCompatActivity {
         savedInstanceState.putInt(mIndex,mCurrentIndex);
 
     }
+
 
 
     
