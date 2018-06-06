@@ -1,11 +1,17 @@
 package com.knoxpo.rajivsonawala.geoquizfirst;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,6 +27,7 @@ public class cheatActivity extends AppCompatActivity {
     private final static String mValue="value";
     private static final String Extra_code_Answer_Shown="com.knoxpo.rajivsonawala.geoQuizfirst.answer_shown";
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +39,7 @@ public class cheatActivity extends AppCompatActivity {
         if(savedInstanceState!=null)
         {
             mvalueIsTrue=savedInstanceState.getBoolean(mValue,false);
-            showResult(mvalueIsTrue
-            );
+            showResult(mvalueIsTrue);
         }
         else {
 
@@ -42,6 +48,7 @@ public class cheatActivity extends AppCompatActivity {
 
 
         mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
 
@@ -54,6 +61,8 @@ public class cheatActivity extends AppCompatActivity {
 
 
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         public void showResult(boolean value)
         {
             if(value)
@@ -65,7 +74,28 @@ public class cheatActivity extends AppCompatActivity {
             }
             setAnswerShownResult(true);
 
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+
+                Log.d(TAG,"Version "+Build.VERSION.SDK_INT);
+                Log.d(TAG,"Compare Version "+Build.VERSION_CODES.LOLLIPOP);
+                int cx = mShowAnswerButton.getWidth() / 2;
+                int cy = mShowAnswerButton.getHeight() / 2;
+                float redius = mShowAnswerButton.getWidth();
+                Animator anim = ViewAnimationUtils.createCircularReveal(mShowAnswerButton, cx, cy, redius, 0);
+
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        mShowAnswerButton.setVisibility(View.INVISIBLE);
+
+                    }
+
+                });
+                anim.start();
+            }
         }
+
 
         public static Intent newIntent(Context packageContext, boolean answerIsTrue) {
             Intent intent = new Intent(packageContext, cheatActivity.class);
