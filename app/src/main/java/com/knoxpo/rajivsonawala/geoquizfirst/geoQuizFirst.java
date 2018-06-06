@@ -153,13 +153,13 @@ public class geoQuizFirst extends AppCompatActivity {
                 }
                 mIsCheatAnswer=cheatActivity.wasAnswerShown(data);
 
-            /*    if(mNoOfCheat==2)
+            if(mNoOfCheat==2)
                 {
                     mCheatButton.setEnabled(false);
                     Toast.makeText(geoQuizFirst.this,"Cheat is Disable",Toast.LENGTH_SHORT).show();
                 }
 
-               mNoOfCheat=mNoOfCheat+1;*/
+               mNoOfCheat=mNoOfCheat+1;
 
 
 
