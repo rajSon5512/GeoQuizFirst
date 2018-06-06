@@ -22,6 +22,8 @@ public class geoQuizFirst extends AppCompatActivity {
     private TextView mQuestionTextView;
     private boolean mIsCheatAnswer;
     private String messageResId;
+    private int mNoOfCheat;
+    private final static String mNoIndex="NoOfCheat";
 
     private Question[] mQuestionsBank=new Question[]{new Question(R.string.question_australia,true),new Question(R.string.question_ocean,true),
             new Question(R.string.question_mideast,false),new Question(R.string.question_africa,false),new Question(R.string.question_americas,true)
@@ -43,6 +45,7 @@ public class geoQuizFirst extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(mIndex, 0);
+            mNoOfCheat=savedInstanceState.getInt(mNoIndex,0);
         }
 
         Log.d(TAG,"your oncreate Method Is Called.");
@@ -149,6 +152,17 @@ public class geoQuizFirst extends AppCompatActivity {
                     return;
                 }
                 mIsCheatAnswer=cheatActivity.wasAnswerShown(data);
+
+            /*    if(mNoOfCheat==2)
+                {
+                    mCheatButton.setEnabled(false);
+                    Toast.makeText(geoQuizFirst.this,"Cheat is Disable",Toast.LENGTH_SHORT).show();
+                }
+
+               mNoOfCheat=mNoOfCheat+1;*/
+
+
+
             }
 
     }
@@ -262,6 +276,8 @@ public class geoQuizFirst extends AppCompatActivity {
         Log.d(TAG,"Your onSaveInstanceState method.");
         Log.i(mIndex,"onStateInstatanceState");
         savedInstanceState.putInt(mIndex,mCurrentIndex);
+        Log.i(mNoIndex,"Your Cheat value");
+        savedInstanceState.putInt(mNoIndex,mNoOfCheat);
 
     }
 

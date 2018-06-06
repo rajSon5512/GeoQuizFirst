@@ -94,6 +94,7 @@ public class cheatActivity extends AppCompatActivity {
                 });
                 anim.start();
             }
+
         }
 
 
